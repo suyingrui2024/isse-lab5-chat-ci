@@ -10,7 +10,8 @@ from openai import OpenAI
 app = Flask(__name__, static_folder="frontend", static_url_path="")
 app.json.ensure_ascii = False
 load_dotenv()
-DATA_FILE = Path(__file__).parent / "data" / "messages.json"
+DATA_DIR = Path(os.getenv("LAB5_DATA_DIR", Path(__file__).parent / "data"))
+DATA_FILE = DATA_DIR / "messages.json"
 
 
 def load_messages():
