@@ -154,6 +154,7 @@ def delete_message(message_id):
         return error_response("message not found", 404)
 
     record_index = messages.index(record)
+    messages.pop(record_index)
     try:
         save_messages()
     except OSError:
