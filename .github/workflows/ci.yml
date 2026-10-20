@@ -37,3 +37,6 @@ jobs:
           --cov=app
           --cov-report=term-missing
           --cov-fail-under=70
+
+      - name: Run smoke test
+        run: python scripts/smoke_test.py
