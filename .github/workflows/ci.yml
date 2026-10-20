@@ -17,32 +17,24 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7
 
-      - name: Set up Python
-        uses: actions/setup-python@v7
-        with:
-          python-version: "3.13"
-          cache: pip
-          cache-dependency-path: |
-            requirements.txt
-            requirements-dev.txt
-
       - name: Show runner environment
         run: |
           sw_vers
           uname -m
-          python --version
+          python3 --version
 
-      - name: Install dependencies
+      - name: Prepare Python environment
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt -r requirements-dev.txt
+          python3 -m venv .venv-ci
+          .venv-ci/bin/python -m pip install --upgrade pip
+          .venv-ci/bin/python -m pip install -r requirements.txt -r requirements-dev.txt
 
       - name: Run tests with coverage
         run: >-
-          python -m pytest -q
+          .venv-ci/bin/python -m pytest -q
           --cov=app
           --cov-report=term-missing
           --cov-fail-under=70
 
       - name: Run smoke test
-        run: python scripts/smoke_test.py
+        run: .venv-ci/bin/python scripts/smoke_test.py
