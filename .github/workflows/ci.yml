@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Check out repository
@@ -25,6 +25,12 @@ jobs:
           cache-dependency-path: |
             requirements.txt
             requirements-dev.txt
+
+      - name: Show runner environment
+        run: |
+          sw_vers
+          uname -m
+          python --version
 
       - name: Install dependencies
         run: |
